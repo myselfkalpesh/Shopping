@@ -1,4 +1,5 @@
 ﻿using Shopping.Core.Models;
+using Shopping.Core.ViewModels;
 using Shopping.DataAccess.InMemory;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace Shopping.Web.Controllers
     public class ProductController : Controller
     {
         ProductRepository context;
+        ProductCategoryRepository categoryContext;
 
         public ProductController()
         {
             context = new ProductRepository();
+            categoryContext = new ProductCategoryRepository();
         }
         // GET: Product
         public ActionResult Index()
@@ -25,20 +28,22 @@ namespace Shopping.Web.Controllers
 
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductViewModel productVM = new ProductViewModel();
+            productVM.Product = new Product();
+            productVM.ProductCategories = categoryContext.Collection().ToList();
+            return View(productVM);
         }
 
         [HttpPost]
-        public ActionResult Create(Product p)
+        public ActionResult Create(ProductViewModel p)
         {
             if (!ModelState.IsValid)
             {
-                return View(p);
+                return View(p.Product);
             }
             else
             {
-                context.Insert(p);
+                context.Insert(p.Product);
                 context.Commit();
 
                 return RedirectToAction("Index");
@@ -55,12 +60,15 @@ namespace Shopping.Web.Controllers
             }
             else
             {
-                return View(product);
+                ProductViewModel productVM = new ProductViewModel();
+                productVM.Product = product;
+                productVM.ProductCategories = categoryContext.Collection().ToList();
+                return View(productVM);
             }
         }
 
         [HttpPost]
-        public ActionResult Edit(Product p, string Id)
+        public ActionResult Edit(ProductViewModel p, string Id)
         {
             Product productToEdit = context.Find(Id);
 
@@ -75,11 +83,11 @@ namespace Shopping.Web.Controllers
                     return View(p);
                 }
 
-                productToEdit.Category = p.Category;
-                productToEdit.Description = p.Description;
-                productToEdit.Image = p.Image;
-                productToEdit.Name = p.Name;
-                productToEdit.Price = p.Price;
+                productToEdit.Category = p.Product.Category;
+                productToEdit.Description = p.Product.Description;
+                productToEdit.Image = p.Product.Image;
+                productToEdit.Name = p.Product.Name;
+                productToEdit.Price = p.Product.Price;
 
                 context.Commit();
 
