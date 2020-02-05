@@ -1,4 +1,5 @@
-﻿using Shopping.Core.Models;
+﻿using Shopping.Core;
+using Shopping.Core.Models;
 using Shopping.Core.ViewModels;
 using Shopping.DataAccess.InMemory;
 using System;
@@ -11,13 +12,13 @@ namespace Shopping.Web.Controllers
 {
     public class ProductController : Controller
     {
-        InMemoryRepository<Product> context;
-        InMemoryRepository<ProductCategory>  categoryContext;
+        IRepository<Product> context;
+        IRepository<ProductCategory>  categoryContext;
 
-        public ProductController()
+        public ProductController(IRepository<Product> _productContext, IRepository<ProductCategory> _categoryContext)
         {
-            context = new InMemoryRepository<Product>();
-            categoryContext = new InMemoryRepository<ProductCategory>();
+            context = _productContext;
+            categoryContext = _categoryContext;
         }
         // GET: Product
         public ActionResult Index()
