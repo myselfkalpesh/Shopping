@@ -11,13 +11,13 @@ namespace Shopping.Web.Controllers
 {
     public class ProductController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository categoryContext;
+        InMemoryRepository<Product> context;
+        InMemoryRepository<ProductCategory>  categoryContext;
 
         public ProductController()
         {
-            context = new ProductRepository();
-            categoryContext = new ProductCategoryRepository();
+            context = new InMemoryRepository<Product>();
+            categoryContext = new InMemoryRepository<ProductCategory>();
         }
         // GET: Product
         public ActionResult Index()
