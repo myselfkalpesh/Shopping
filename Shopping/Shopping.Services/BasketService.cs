@@ -1,4 +1,5 @@
 ﻿using Shopping.Core;
+using Shopping.Core.Contracts;
 using Shopping.Core.Models;
 using Shopping.Core.ViewModels;
 using System;

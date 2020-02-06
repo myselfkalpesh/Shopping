@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Shopping.Core.ViewModels.BasketItemViewModel>
+
+@{
+    ViewBag.Title = "Basket";
+}
+
+<h2>Basket</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            Line Total
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="~/Content/ProductImages/@item.Image" alt="Product Image" class="img" height="100px;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+
+            <td>
+                @String.Format($"{item.Price * item.Quantity:c}")
+            </td>
+            <td>
+            </td>
+            <td>
+                <a href="@Url.Action("RemoveFromBasket", new { Id=item.Id })" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="4" style="text-align: right;"><strong>Basket Total</strong></td>
+        <td>
+            @String.Format($"{(from p in Model select p.Price * p.Quantity).Sum():c}")
+        </td>
+        <td></td>
+        <td></td>
+    </tr>
+
+
+</table>

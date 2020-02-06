@@ -1,7 +1,9 @@
 using Shopping.Core;
+using Shopping.Core.Contracts;
 using Shopping.Core.Models;
 using Shopping.DataAccess.InMemory;
 using Shopping.DataAccess.SQL;
+using Shopping.Services;
 using System;
 
 using Unity;
@@ -54,6 +56,9 @@ namespace Shopping.Web
 
             container.RegisterType<IRepository<Product>, SQLRepository<Product>>();
             container.RegisterType<IRepository<ProductCategory>, SQLRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Basket>, SQLRepository<Basket>>();
+            container.RegisterType<IRepository<BasketItem>, SQLRepository<BasketItem>>();
+            container.RegisterType<IBasketService, BasketService>();
         }
     }
 }
