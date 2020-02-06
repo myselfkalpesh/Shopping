@@ -23,7 +23,7 @@
     {
         <div class="col-md-4" style="height:450px;padding:10px;margin:10px;border:solid thin whitesmoke;">
             <div class="col-md-12">
-                <img src="~/Content/ProductImages/@item.Image" alt="Alternate Text" class="img" style="height:250px;" />
+                <img src="~/Content/ProductImages/@item.Image" alt="Alternate Text" class="img" style="height:auto; width: 240px;" />
             </div>
             <div class="col-md-12">
                 <strong>@Html.ActionLink(@item.Name, "Details", new { Id = item.Id })</strong>
