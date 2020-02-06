@@ -25,7 +25,7 @@ namespace Shopping.Web.Controllers
         }
         public ActionResult AddToBasket(string Id)
         {
-            basketService.AddtoBasket(this.HttpContext, Id);
+            basketService.AddToBasket(this.HttpContext, Id);
 
             return RedirectToAction("Index");
         }
