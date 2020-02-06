@@ -1,5 +1,6 @@
 ﻿using Shopping.Core;
 using Shopping.Core.Models;
+using Shopping.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,25 @@ namespace Shopping.Web.Controllers
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(string Category =  null)
         {
-            List<Product> products = productContext.Collection().ToList();
-            return View(products);
+            List<Product> products;
+            List<ProductCategory> categories = categoryContext.Collection().ToList();
+            
+            if (Category == null)
+            {
+                products = productContext.Collection().ToList();
+            }
+            else
+            {
+                products = productContext.Collection().Where(p => p.Category == Category).ToList();
+            }
+
+            ProductListViewModel model = new ProductListViewModel();
+            model.Products = products;
+            model.ProductCategories = categories;
+
+            return View(model);
         }
 
         public ActionResult Details(string Id)
