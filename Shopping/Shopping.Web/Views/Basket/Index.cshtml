@@ -55,9 +55,10 @@
         <td>
             @String.Format($"{(from p in Model select p.Price * p.Quantity).Sum():c}")
         </td>
+        <td><a href="@Url.Action("Checkout", "Basket")">Checkout</a></td>
         <td></td>
         <td></td>
     </tr>
 
-
+     
 </table>
